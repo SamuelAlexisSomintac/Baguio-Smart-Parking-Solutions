@@ -7,17 +7,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // --- Geolocation Feature ---
-// Center the map on the user's location if supported
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
         function (position) {
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
-            map.setView([userLat, userLon], 15); // Center map on user's location
+            map.setView([userLat, userLon], 15);
             L.marker([userLat, userLon])
                 .addTo(map)
                 .bindPopup("You are here.")
-                .openPopup(); // Add a marker for the user's location
+                .openPopup();
         },
         function (error) {
             console.error("Geolocation error: ", error.message);
@@ -29,12 +28,7 @@ if (navigator.geolocation) {
 }
 
 // --- Dynamic Parking Data ---
-// Fetch parking data from an API and display markers
 const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Mock API URL for testing
-
-
-
-
 fetch(apiUrl)
     .then((response) => {
         if (!response.ok) {
@@ -50,7 +44,7 @@ fetch(apiUrl)
                     <b>${location.name}</b><br>
                     Available Spaces: ${location.availableSpaces}<br>
                     Total Spaces: ${location.totalSpaces}
-                `); // Display dynamic data in popups
+                `);
         });
     })
     .catch((error) => {
@@ -58,21 +52,7 @@ fetch(apiUrl)
         alert("Unable to load parking data.");
     });
 
-// --- Clickable Map Interaction ---
-// Allow users to add markers dynamically by clicking on the map
-map.on("click", function (e) {
-    const lat = e.latlng.lat;
-    const lon = e.latlng.lng;
-    const locationName = prompt("Enter a name for this location:");
-    if (locationName) {
-        L.marker([lat, lon])
-            .addTo(map)
-            .bindPopup(`<b>${locationName}</b>`); // Add user-defined markers
-    }
-});
-
 // --- Marker Clustering ---
-// Cluster parking location markers for better performance
 const markers = L.markerClusterGroup();
 const parkingLocations = [
     { lat: 16.4023, lon: 120.5960, name: "Igorot Stone Kingdom" },
@@ -83,6 +63,6 @@ parkingLocations.forEach((location) => {
     const marker = L.marker([location.lat, location.lon]).bindPopup(
         `<b>${location.name}</b>`
     );
-    markers.addLayer(marker); // Add marker to clustering group
+    markers.addLayer(marker);
 });
 map.addLayer(markers); // Add cluster group to the map
