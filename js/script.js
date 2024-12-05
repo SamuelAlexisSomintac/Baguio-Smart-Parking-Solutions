@@ -1,68 +1,61 @@
-// --- Initialize the Map ---
-var map = L.map('map').setView([51.505, -0.09], 13); // Default view
+// Map Initialization
+var map = L.map('map').setView([16.4023, 120.5960], 15); // Baguio City center
 
-// --- Add Tile Layer ---
+// Add OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; OpenStreetMap contributors',
 }).addTo(map);
 
-// --- Geolocation Feature ---
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-        function (position) {
-            const userLat = position.coords.latitude;
-            const userLon = position.coords.longitude;
-            map.setView([userLat, userLon], 15);
-            L.marker([userLat, userLon])
-                .addTo(map)
-                .bindPopup("You are here.")
-                .openPopup();
-        },
-        function (error) {
-            console.error("Geolocation error: ", error.message);
-            alert("Unable to retrieve your location. Showing default view.");
-        }
-    );
-} else {
-    alert("Geolocation is not supported by your browser.");
-}
-
-// --- Dynamic Parking Data ---
-const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Mock API URL for testing
-fetch(apiUrl)
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error("Failed to fetch parking data.");
-        }
-        return response.json();
-    })
-    .then((data) => {
-        data.forEach((location) => {
-            L.marker([location.lat, location.lon])
-                .addTo(map)
-                .bindPopup(`
-                    <b>${location.name}</b><br>
-                    Available Spaces: ${location.availableSpaces}<br>
-                    Total Spaces: ${location.totalSpaces}
-                `);
-        });
-    })
-    .catch((error) => {
-        console.error("Error fetching parking data: ", error.message);
-        alert("Unable to load parking data.");
-    });
-
-// --- Marker Clustering ---
-const markers = L.markerClusterGroup();
-const parkingLocations = [
-    { lat: 16.4023, lon: 120.5960, name: "Igorot Stone Kingdom" },
-    { lat: 16.4112, lon: 120.6000, name: "Baguio Botanical Garden" },
-    { lat: 16.4125, lon: 120.5856, name: "Mines View Park" },
+// Mock parking data
+const parkingData = [
+    { name: "Igorot Stone Kingdom", lat: 16.4023, lon: 120.5960, availableSpaces: 10 },
+    { name: "Burnham Park", lat: 16.4028, lon: 120.5953, availableSpaces: 5 },
+    { name: "Mines View Park", lat: 16.4125, lon: 120.5856, availableSpaces: 0 },
 ];
-parkingLocations.forEach((location) => {
-    const marker = L.marker([location.lat, location.lon]).bindPopup(
-        `<b>${location.name}</b>`
-    );
-    markers.addLayer(marker);
+
+// Add parking locations to the map
+parkingData.forEach((location) => {
+    L.marker([location.lat, location.lon])
+        .addTo(map)
+        .bindPopup(`<b>${location.name}</b><br>Available Spaces: ${location.availableSpaces}`);
 });
-map.addLayer(markers); // Add cluster group to the map
+
+// Search functionality
+document.getElementById('search-btn').addEventListener('click', function () {
+    const searchInput = document.getElementById('destination-search').value.trim();
+    const destination = parkingData.find((loc) => loc.name.toLowerCase() === searchInput.toLowerCase());
+
+    if (destination) {
+        // Center map on the destination
+        map.setView([destination.lat, destination.lon], 16);
+
+        // Simulate route calculation and ETA
+        const eta = Math.floor(Math.random() * 30) + 5; // Random ETA between 5-30 minutes
+        document.getElementById('eta').textContent = eta;
+
+        // Check parking availability
+        const availabilityText = destination.availableSpaces > 0
+            ? `Available Parking Spaces: ${destination.availableSpaces}`
+            : `Parking Full at ${destination.name}. You will be queued.`;
+
+        document.getElementById('parking-availability').textContent = availabilityText;
+
+        // Show reserve button if spaces are available
+        const reserveBtn = document.getElementById('reserve-btn');
+        if (destination.availableSpaces > 0) {
+            reserveBtn.style.display = 'inline';
+        } else {
+            reserveBtn.style.display = 'none';
+        }
+
+        // Display route information
+        document.getElementById('route-info').style.display = 'block';
+    } else {
+        alert('Destination not found. Please check the name and try again.');
+    }
+});
+
+// Reserve parking functionality
+document.getElementById('reserve-btn').addEventListener('click', function () {
+    alert('Parking space reserved successfully!');
+});
