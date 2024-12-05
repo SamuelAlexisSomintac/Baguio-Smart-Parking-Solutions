@@ -30,7 +30,8 @@ if (navigator.geolocation) {
 
 // --- Dynamic Parking Data ---
 // Fetch parking data from an API and display markers
-const apiUrl = "./parking-data.json"; // Local JSON file path
+const apiUrl = "https://cors-anywhere.herokuapp.com/https://example.com/api/parking-data";
+
 
 
 fetch(apiUrl)
