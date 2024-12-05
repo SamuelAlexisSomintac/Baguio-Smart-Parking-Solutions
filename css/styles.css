@@ -1,40 +1,58 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Center content below the map */
+#features {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
 }
 
-/* Header Styles */
-header {
+#destination-search {
+    width: 70%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#search-btn {
+    padding: 8px 16px;
     background-color: #4CAF50;
     color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 1.5em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-/* Footer Styles */
-footer {
-    background-color: #333;
+#search-btn:hover {
+    background-color: #45a049;
+}
+
+#route-info {
+    margin-top: 20px;
+    text-align: left;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+}
+
+#reserve-btn {
+    display: none;
+    padding: 10px 20px;
+    background-color: #007BFF;
     color: white;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-/* Main Content Styles */
-main {
-    margin: 20px 0; /* Ensure space between header and footer */
+#reserve-btn:hover {
+    background-color: #0056b3;
 }
 
-/* Map Styles */
-#map {
-    margin: 20px auto; /* Center the map */
-    max-width: 1200px; /* Optional: Limit map width */
-    border: 1px solid #ddd;
-    border-radius: 5px;
+#parking-availability {
+    margin: 10px 0;
+    font-weight: bold;
 }
