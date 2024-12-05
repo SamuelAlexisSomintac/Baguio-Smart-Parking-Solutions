@@ -3,28 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parking Management System</title>
+    <title>Baguio Smart Parking Solutions</title>
+    
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="css/leaflet.css">
-    <!-- Custom CSS -->
+    
+    <!-- MarkerCluster CSS -->
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Parking Management System</h1>
-        <p>Check real-time parking availability and reserve your spot!</p>
-    </header>
+    <div id="map" style="height: 400px; width: 100%;"></div> <!-- Map container -->
 
-    <!-- Map Container -->
-    <div id="map" style="height: 400px; width: 100%;"></div>
-
-    <footer>
-        <p>© 2024 Parking Management System. All rights reserved.</p>
-    </footer>
-
-    <!-- Leaflet JavaScript -->
+    <!-- Leaflet JS -->
     <script src="js/leaflet.js"></script>
-    <!-- Custom JavaScript -->
+    <script src="js/leaflet.markercluster.js"></script>
+
+    <!-- Custom JS -->
     <script src="js/script.js"></script>
 </body>
 </html>
