@@ -1,91 +1,40 @@
-/* --- General Styles --- */
-/* Set global font and background properties */
+/* General Styles */
 body {
-    font-family: Arial, sans-serif; /* Use a clean, modern font */
-    background-color: #f4f4f9; /* Light gray background for readability */
-    color: #333; /* Dark text for contrast */
-    margin: 0; /* Remove default margin from the body */
-    padding: 0; /* Remove default padding from the body */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* --- Header Section --- */
-/* Style for the header, typically the hero section */
+/* Header Styles */
 header {
-    text-align: center; /* Center all text and content inside the header */
-    padding: 50px; /* Add space inside the header for breathing room */
-    background-color: #007bff; /* Blue background for visual appeal */
-    color: white; /* White text to contrast the blue background */
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.5em;
 }
 
-/* Style for the main title (h1) */
-header h1 {
-    font-size: 2.5em; /* Larger font for the title */
-    margin-bottom: 20px; /* Add space below the title */
-}
-
-/* Style for the subtitle or description (p) */
-header p {
-    font-size: 1.2em; /* Slightly larger font for emphasis */
-    margin-bottom: 30px; /* Add space below the subtitle */
-}
-
-/* --- Button Styles --- */
-/* General button styling */
-button {
-    padding: 10px 20px; /* Add padding inside the button */
-    background-color: #0056b3; /* Darker blue button background */
-    color: white; /* White text for readability */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Slightly round the edges */
-    font-size: 1em; /* Standard font size */
-    cursor: pointer; /* Show hand icon on hover */
-}
-
-/* Hover effect for buttons */
-button:hover {
-    background-color: #004494; /* Even darker blue on hover */
-}
-
-/* --- Map Section --- */
-/* Style for the map container */
-#map {
-    height: 400px; /* Fixed height for the map */
-    width: 100%; /* Full width of the page */
-    margin-top: 30px; /* Add space above the map */
-    border: 2px solid #ccc; /* Light border around the map */
-    border-radius: 10px; /* Rounded edges for a clean look */
-}
-
-/* --- Footer Section --- */
-/* Style for the footer, if you have one */
+/* Footer Styles */
 footer {
-    text-align: center; /* Center text inside the footer */
-    padding: 20px; /* Add padding for spacing */
-    background-color: #333; /* Dark gray background */
-    color: white; /* White text for readability */
-    font-size: 0.9em; /* Slightly smaller text */
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
-/* --- Responsive Design --- */
-/* Adjust styles for smaller screens */
-@media (max-width: 768px) {
-    header {
-        padding: 30px; /* Reduce padding for smaller devices */
-    }
+/* Main Content Styles */
+main {
+    margin: 20px 0; /* Ensure space between header and footer */
+}
 
-    header h1 {
-        font-size: 2em; /* Reduce title size */
-    }
-
-    header p {
-        font-size: 1em; /* Reduce subtitle size */
-    }
-
-    button {
-        width: 90%; /* Make the button wider on smaller screens */
-    }
-
-    #map {
-        height: 300px; /* Reduce map height for smaller devices */
-    }
+/* Map Styles */
+#map {
+    margin: 20px auto; /* Center the map */
+    max-width: 1200px; /* Optional: Limit map width */
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
