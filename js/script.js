@@ -6,6 +6,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors',
 }).addTo(map);
 
+// Leaflet Routing Machine
+var control = L.Routing.control({
+    waypoints: [],
+    routeWhileDragging: true,
+    lineOptions: {
+        styles: [{ color: 'red', weight: 4 }],
+    },
+}).addTo(map);
+
 // Mock parking data
 const parkingData = [
     { name: "Igorot Stone Kingdom", lat: 16.4023, lon: 120.5960, availableSpaces: 10 },
@@ -28,6 +37,12 @@ document.getElementById('search-btn').addEventListener('click', function () {
     if (destination) {
         // Center map on the destination
         map.setView([destination.lat, destination.lon], 16);
+
+        // Update the route
+        control.setWaypoints([
+            L.latLng(map.getCenter()), // Current center as start
+            L.latLng(destination.lat, destination.lon), // Destination
+        ]);
 
         // Simulate route calculation and ETA
         const eta = Math.floor(Math.random() * 30) + 5; // Random ETA between 5-30 minutes
