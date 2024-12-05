@@ -1,15 +1,23 @@
+// --- Initialize the Map ---
+var map = L.map('map').setView([51.505, -0.09], 13); // Default view
+
+// --- Add Tile Layer ---
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
 // --- Geolocation Feature ---
-// Place this code at the top to center the map on the user's location if supported.
+// Center the map on the user's location if supported
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
         function (position) {
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
-            map.setView([userLat, userLon], 15);
+            map.setView([userLat, userLon], 15); // Center map on user's location
             L.marker([userLat, userLon])
                 .addTo(map)
                 .bindPopup("You are here.")
-                .openPopup();
+                .openPopup(); // Add a marker for the user's location
         },
         function (error) {
             console.error("Geolocation error: ", error.message);
@@ -21,7 +29,7 @@ if (navigator.geolocation) {
 }
 
 // --- Dynamic Parking Data ---
-// Add this code below the geolocation feature.
+// Fetch parking data from an API and display markers
 const apiUrl = "https://example.com/api/parking-data"; // Replace with your API URL
 fetch(apiUrl)
     .then((response) => {
@@ -38,7 +46,7 @@ fetch(apiUrl)
                     <b>${location.name}</b><br>
                     Available Spaces: ${location.availableSpaces}<br>
                     Total Spaces: ${location.totalSpaces}
-                `);
+                `); // Display dynamic data in popups
         });
     })
     .catch((error) => {
@@ -47,7 +55,7 @@ fetch(apiUrl)
     });
 
 // --- Clickable Map Interaction ---
-// Place this code to allow users to add markers dynamically by clicking the map.
+// Allow users to add markers dynamically by clicking on the map
 map.on("click", function (e) {
     const lat = e.latlng.lat;
     const lon = e.latlng.lng;
@@ -55,12 +63,12 @@ map.on("click", function (e) {
     if (locationName) {
         L.marker([lat, lon])
             .addTo(map)
-            .bindPopup(`<b>${locationName}</b>`);
+            .bindPopup(`<b>${locationName}</b>`); // Add user-defined markers
     }
 });
 
 // --- Marker Clustering ---
-// Place this code last to ensure all markers are handled efficiently.
+// Cluster parking location markers for better performance
 const markers = L.markerClusterGroup();
 const parkingLocations = [
     { lat: 16.4023, lon: 120.5960, name: "Igorot Stone Kingdom" },
@@ -71,6 +79,6 @@ parkingLocations.forEach((location) => {
     const marker = L.marker([location.lat, location.lon]).bindPopup(
         `<b>${location.name}</b>`
     );
-    markers.addLayer(marker);
+    markers.addLayer(marker); // Add marker to clustering group
 });
-map.addLayer(markers);
+map.addLayer(markers); // Add cluster group to the map
