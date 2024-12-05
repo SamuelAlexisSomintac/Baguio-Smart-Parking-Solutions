@@ -30,7 +30,8 @@ if (navigator.geolocation) {
 
 // --- Dynamic Parking Data ---
 // Fetch parking data from an API and display markers
-const apiUrl = "https://jsonplaceholder.typicode.com/posts"; // Mock API URL for testing
+const apiUrl = "./parking-data.json"; // Local JSON file path
+
 
 fetch(apiUrl)
     .then((response) => {
