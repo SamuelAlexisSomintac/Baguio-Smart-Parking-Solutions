@@ -24,6 +24,19 @@
     <!-- Map Section -->
     <main>
         <div id="map" style="height: 400px; width: 100%;"></div>
+        
+        <!-- New Features Below the Map -->
+        <section id="features">
+            <label for="destination-search">Where would you like to go?</label>
+            <input type="text" id="destination-search" placeholder="Enter destination, e.g., Igorot Stone Kingdom" />
+            <button id="search-btn">Search</button>
+
+            <div id="route-info" style="display: none;">
+                <p><b>Estimated Time of Arrival (ETA):</b> <span id="eta"></span> minutes</p>
+                <p id="parking-availability"></p>
+                <button id="reserve-btn" style="display: none;">Reserve a Parking Space</button>
+            </div>
+        </section>
     </main>
 
     <!-- Footer Section -->
