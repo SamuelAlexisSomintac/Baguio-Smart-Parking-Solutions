@@ -3,43 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baguio Smart Parking Solutions</title>
+    <title>Parking Management System</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="css/leaflet.css">
+    
+    <!-- MarkerCluster CSS -->
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+    <link rel="stylesheet" href="css/MarkerCluster.css">
 
-    <!-- Include Leaflet CSS and JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-
-    <!-- Include Leaflet Routing Machine CSS and JS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Header Section -->
     <header>
         <h1>Welcome to Baguio Smart Parking Solutions</h1>
     </header>
 
+    <!-- Map Section -->
     <main>
-        <div id="map"></div>
-        <div id="features">
-            <form id="search-form">
-                <label for="location">Where would you like to go?</label>
-                <input type="text" id="location" placeholder="Enter your destination" />
-                <button type="button" id="search-btn">Search</button>
-            </form>
-            <p id="eta">Estimated Time of Arrival (ETA): <span id="eta-value"></span></p>
-            <p id="available-parking">Available Parking Spaces: <span id="parking-spaces"></span></p>
-            <button id="reserve-btn">Reserve a Parking Space</button>
-        </div>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+        
+        <!-- New Features Below the Map -->
+        <section id="features">
+            <label for="destination-search">Where would you like to go?</label>
+            <input type="text" id="destination-search" placeholder="Enter destination, e.g., Igorot Stone Kingdom" />
+            <button id="search-btn">Search</button>
+
+            <div id="route-info" style="display: none;">
+                <p><b>Estimated Time of Arrival (ETA):</b> <span id="eta"></span> minutes</p>
+                <p id="parking-availability"></p>
+                <button id="reserve-btn" style="display: none;">Reserve a Parking Space</button>
+            </div>
+        </section>
     </main>
 
+    <!-- Footer Section -->
     <footer>
-        <p>&copy; 2024 Baguio Smart Parking Solutions</p>
+        <p>&copy; 2024 Parking Management System. All rights reserved.</p>
     </footer>
 
-    <!-- Custom JavaScript -->
-    <script src="script.js"></script>
+    <!-- Leaflet JS -->
+    <script src="js/leaflet.js"></script>
+    <script src="js/leaflet.markercluster.js"></script>
+
+    <!-- Custom JS -->
+    <script src="js/script.js"></script>
 </body>
 </html>
