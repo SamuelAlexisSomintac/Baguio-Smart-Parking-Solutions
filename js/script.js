@@ -19,7 +19,8 @@ function locateUser() {
                 L.marker([userLat, userLng]).addTo(map)
                     .bindPopup("You Are Here").openPopup();
 
-                console.log(`User's location: ${userLat}, ${userLng}`);
+                console.log("User's location:", userLat, userLng);
+                console.log("Destination Location:",destinationLat,destinationLng);
             },
             (error) => {
                 console.error("Error getting user location:", error.message);
@@ -51,7 +52,6 @@ function addRouting(userLat, userLng, destinationLat, destinationLng) {
 // Function to fetch destination data and add routing
 function fetchDestinationAndRoute() {
     const mockJsonUrl = "parking-data.json"; // Replace with the actual path or URL
-
     fetch(mockJsonUrl)
         .then(response => {
             if (!response.ok) {
