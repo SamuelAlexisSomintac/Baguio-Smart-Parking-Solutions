@@ -7,7 +7,7 @@
 
     <!--google fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Permanent+Marker&display=swap" rel="stylesheet">
-    
+
     <!-- CSS for font styling -->
         <style>
             body {
@@ -20,19 +20,21 @@
             font-weight: 700;
             font-style: italic;
         }
-         /* Center the footer content */
-         footer {
+        /* Center the footer content */
+        footer {
             text-align: center;
             padding: 10px;
             background-color: #f4f4f4; /* Optional: Add background to the footer */
         }
+        
+        
         </style>
 
     <!-- Leaflet JS -->
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet.markercluster.js"></script>
-    
-    
+
+
     <!--Leaflet link -->
     <link rel="stylesheet" href="css/MarkerCluster.css">
     <link rel="stylesheet" href="css/MarkerCluster.Default.css">
@@ -40,7 +42,7 @@
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="css/leaflet.css">
-    
+
     <!-- MarkerCluster CSS -->
     <link rel="stylesheet" href="css/MarkerCluster.Default.css">
     <link rel="stylesheet" href="css/MarkerCluster.css">
@@ -58,24 +60,13 @@
 <body>
     <!-- Header Section -->
     <header>
-        <h1>Welcome to Baguio Smart Parking Solutions</h1>
+        <h1>Welcome to Baguio Smart Parking Solutions!</h1>
     </header>
-
-    <main>
-        <section class="search-section">
-            <label for="search-box">Where would you like to go?</label>
-            <input type="text" id="search-box" placeholder="Enter destination...">
-            <button id="search-btn">Search</button>
-        </section>
-        <section class="background-image-section">
-            <!-- This is the section where the background image is applied -->
-        </section>
-    </main>
 
     <!-- Map Section -->
     <main>
         <div id="map" style="height: 400px; width: 100%;"></div>
-        
+
         <!-- New Features Below the Map -->
         <section id="features">
             <label for="destination-search">Where would you like to go?</label>
