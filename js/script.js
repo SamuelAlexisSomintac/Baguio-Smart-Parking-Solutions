@@ -1,76 +1,57 @@
-// Map Initialization
-var map = L.map('map').setView([16.4023, 120.5960], 15); // Baguio City center
-
-// Add OpenStreetMap tiles
+// Initialize the map
+const map = L.map('map').setView([16.4023, 120.5981], 15); // Default location: Baguio City
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
+    attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Leaflet Routing Machine
-var control = L.Routing.control({
-    waypoints: [],
-    routeWhileDragging: true,
-    lineOptions: {
-        styles: [{ color: 'red', weight: 4 }],
-    },
-}).addTo(map);
+// Mock JSON URL for parking data
+const mockApiUrl = 'https://jsonplaceholder.typicode.com/posts/1';
 
-// Mock parking data
-const parkingData = [
-    { name: "Igorot Stone Kingdom", lat: 16.4023, lon: 120.5960, availableSpaces: 10 },
-    { name: "Burnham Park", lat: 16.4028, lon: 120.5953, availableSpaces: 5 },
-    { name: "Mines View Park", lat: 16.4125, lon: 120.5856, availableSpaces: 0 },
-];
-
-// Add parking locations to the map
-parkingData.forEach((location) => {
-    L.marker([location.lat, location.lon])
-        .addTo(map)
-        .bindPopup(`<b>${location.name}</b><br>Available Spaces: ${location.availableSpaces}`);
-});
-
-// Search functionality
-document.getElementById('search-btn').addEventListener('click', function () {
-    const searchInput = document.getElementById('destination-search').value.trim();
-    const destination = parkingData.find((loc) => loc.name.toLowerCase() === searchInput.toLowerCase());
-
-    if (destination) {
-        // Center map on the destination
-        map.setView([destination.lat, destination.lon], 16);
-
-        // Update the route
-        control.setWaypoints([
-            L.latLng(map.getCenter()), // Current center as start
-            L.latLng(destination.lat, destination.lon), // Destination
-        ]);
-
-        // Simulate route calculation and ETA
-        const eta = Math.floor(Math.random() * 30) + 5; // Random ETA between 5-30 minutes
-        document.getElementById('eta').textContent = eta;
-
-        // Check parking availability
-        const availabilityText = destination.availableSpaces > 0
-            ? `Available Parking Spaces: ${destination.availableSpaces}`
-            : `Parking Full at ${destination.name}. You will be queued.`;
-
-        document.getElementById('parking-availability').textContent = availabilityText;
-
-        // Show reserve button if spaces are available
-        const reserveBtn = document.getElementById('reserve-btn');
-        if (destination.availableSpaces > 0) {
-            reserveBtn.style.display = 'inline';
-        } else {
-            reserveBtn.style.display = 'none';
+// Function to create a route
+function addRouteToMap(startLat, startLng, endLat, endLng) {
+    L.Routing.control({
+        waypoints: [
+            L.latLng(startLat, startLng),  // Starting point
+            L.latLng(endLat, endLng)      // Destination point
+        ],
+        routeWhileDragging: true,
+        showAlternatives: true,
+        altLineOptions: {
+            styles: [{ color: 'red', opacity: 0.7, weight: 4 }]
         }
+    }).addTo(map);
+}
 
-        // Display route information
-        document.getElementById('route-info').style.display = 'block';
-    } else {
-        alert('Destination not found. Please check the name and try again.');
+// Event Listener for Search Button
+document.getElementById('search-btn').addEventListener('click', () => {
+    const location = document.getElementById('location').value;
+
+    if (!location) {
+        alert('Please enter a destination.');
+        return;
     }
+
+    // Fetch destination details from mock API (replace this with actual API logic if needed)
+    fetch(mockApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Mock destination coordinates (replace with real data from API)
+            const destinationLat = 16.4023; // Example latitude
+            const destinationLng = 120.5981; // Example longitude
+            const userLat = 16.4090; // Example user's latitude
+            const userLng = 120.6019; // Example user's longitude
+
+            // Calculate ETA and update parking info (mock values for now)
+            document.getElementById('eta-value').textContent = '10 minutes';
+            document.getElementById('parking-spaces').textContent = '10';
+
+            // Add route to map
+            addRouteToMap(userLat, userLng, destinationLat, destinationLng);
+        })
+        .catch(error => console.error('Error fetching mock API:', error));
 });
 
-// Reserve parking functionality
-document.getElementById('reserve-btn').addEventListener('click', function () {
+// Reserve Parking Space Button
+document.getElementById('reserve-btn').addEventListener('click', () => {
     alert('Parking space reserved successfully!');
 });
