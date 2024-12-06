@@ -27,3 +27,13 @@
     margin-top: 20px;
     text-align: center;
 }
+
+@font-face {
+    font-family: 'PermanentMarker-Regular';
+    src: url(fonts/PermanentMarker-Regular.ttf) format('ttf'),
+         
+}
+
+body {
+    font-family: 'PermanentMarker-Regular', cursive;
+}
