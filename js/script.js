@@ -1,61 +1,95 @@
-// Map Initialization
-var map = L.map('map').setView([16.4023, 120.5960], 15); // Baguio City center
-
-// Add OpenStreetMap tiles
+// Initialize the map
+const map = L.map('map').setView([16.4023, 120.5981], 15); // Default location: Baguio City
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
+    attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
-// Mock parking data
-const parkingData = [
-    { name: "Igorot Stone Kingdom", lat: 16.4023, lon: 120.5960, availableSpaces: 10 },
-    { name: "Burnham Park", lat: 16.4028, lon: 120.5953, availableSpaces: 5 },
-    { name: "Mines View Park", lat: 16.4125, lon: 120.5856, availableSpaces: 0 },
-];
+// Function to display user's location
+function locateUser() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLat = position.coords.latitude;
+                const userLng = position.coords.longitude;
 
-// Add parking locations to the map
-parkingData.forEach((location) => {
-    L.marker([location.lat, location.lon])
-        .addTo(map)
-        .bindPopup(`<b>${location.name}</b><br>Available Spaces: ${location.availableSpaces}`);
-});
+                // Center the map on the user's location
+                map.setView([userLat, userLng], 15);
 
-// Search functionality
-document.getElementById('search-btn').addEventListener('click', function () {
-    const searchInput = document.getElementById('destination-search').value.trim();
-    const destination = parkingData.find((loc) => loc.name.toLowerCase() === searchInput.toLowerCase());
+                // Add "You Are Here" marker
+                L.marker([userLat, userLng]).addTo(map)
+                    .bindPopup("You Are Here").openPopup();
 
-    if (destination) {
-        // Center map on the destination
-        map.setView([destination.lat, destination.lon], 16);
-
-        // Simulate route calculation and ETA
-        const eta = Math.floor(Math.random() * 30) + 5; // Random ETA between 5-30 minutes
-        document.getElementById('eta').textContent = eta;
-
-        // Check parking availability
-        const availabilityText = destination.availableSpaces > 0
-            ? `Available Parking Spaces: ${destination.availableSpaces}`
-            : `Parking Full at ${destination.name}. You will be queued.`;
-
-        document.getElementById('parking-availability').textContent = availabilityText;
-
-        // Show reserve button if spaces are available
-        const reserveBtn = document.getElementById('reserve-btn');
-        if (destination.availableSpaces > 0) {
-            reserveBtn.style.display = 'inline';
-        } else {
-            reserveBtn.style.display = 'none';
-        }
-
-        // Display route information
-        document.getElementById('route-info').style.display = 'block';
+                console.log(`User's location: ${userLat}, ${userLng}`);
+            },
+            (error) => {
+                console.error("Error getting user location:", error.message);
+                alert("Unable to access your location. Please enable location services.");
+            }
+        );
     } else {
-        alert('Destination not found. Please check the name and try again.');
+        alert("Geolocation is not supported by this browser.");
     }
-});
+}
 
-// Reserve parking functionality
-document.getElementById('reserve-btn').addEventListener('click', function () {
-    alert('Parking space reserved successfully!');
-});
+// Call the function to locate the user
+locateUser();
+
+// Function to add routing between user's location and destination
+function addRouting(userLat, userLng, destinationLat, destinationLng) {
+    L.Routing.control({
+        waypoints: [
+            L.latLng(userLat, userLng),       // User's current location
+            L.latLng(destinationLat, destinationLng) // Destination
+        ],
+        routeWhileDragging: true,           // Allows users to drag the route
+        lineOptions: {
+            styles: [{ color: 'red', weight: 4 }]
+        }
+    }).addTo(map);
+}
+
+// Function to fetch destination data and add routing
+function fetchDestinationAndRoute() {
+    const mockJsonUrl = "parking-data.json"; // Replace with the actual path or URL
+
+    fetch(mockJsonUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
+        .then(data => {
+            const destination = data.destination; // Extract destination data
+            const destinationLat = destination.latitude;
+            const destinationLng = destination.longitude;
+
+            // Check if user's location is available
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userLat = position.coords.latitude;
+                        const userLng = position.coords.longitude;
+
+                        // Add routing from user's location to the destination
+                        addRouting(userLat, userLng, destinationLat, destinationLng);
+                        console.log(`Routing to: ${destination.name}`);
+                    },
+                    (error) => {
+                        console.error("Error getting user location:", error.message);
+                        alert("Unable to access your location. Please enable location services.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching destination data:", error.message);
+            alert("Failed to fetch destination data. Please try again.");
+        });
+}
+
+
+// Attach event listener to the search button
+document.getElementById("search-btn").addEventListener("click", fetchDestinationAndRoute);
