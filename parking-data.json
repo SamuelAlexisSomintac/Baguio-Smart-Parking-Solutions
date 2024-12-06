@@ -1,5 +1,7 @@
-[
-    { "lat": 16.432429975613555, "lon": 120.57483355531247, "name": "Igorot Stone Kingdom", "availableSpaces": 5, "totalSpaces": 50 },
-    { "lat": 16.4112, "lon": 120.6000, "name": "Baguio Botanical Garden", "availableSpaces": 3, "totalSpaces": 40 }
-  ]
-  
+{
+  "destination": {
+      "latitude": 16.4099,
+      "longitude": 120.6007,
+      "name": "Igorot Stone Kingdom"
+  }
+}
